@@ -26,6 +26,7 @@ app.get("/api/hello", function (req, res) {
 
 // 新增时间戳转换接口
 app.get("/api/:date", function (req, res) {
+  //solution 1:
   let dateParam = req.params.date;
   
   // 处理unix时间戳格式
@@ -43,6 +44,24 @@ app.get("/api/:date", function (req, res) {
     unix: date.getTime(),
     utc: date.toUTCString()
   });
+
+  //solution 2:
+  // let dateString = req.params.date;
+  // //A 4 digit number is a valid ISO-8601 for the beginning of that year
+  // //5 digits or more must be a unix time, until we reach a year 10,000 problem
+  // if (/\d{5,}/.test(dateString)) {
+  //   let dateInt = parseInt(dateString);
+  //   //Date regards numbers as unix timestamps, strings are processed differently
+  //   res.json({ unix: dateInt, utc: new Date(dateInt).toUTCString() });
+  // } else {
+  //   let dateObject = new Date(dateString);
+
+  //   if (dateObject.toString() === "Invalid Date") {
+  //     res.json({ error: "Invalid Date" });
+  //   } else {
+  //     res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
+  //   }
+  // }
 });
 
 // 处理空日期参数的情况
